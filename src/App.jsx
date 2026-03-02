@@ -1,55 +1,32 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import SearchBar from "./components/SearchBar";
 import WordResult from "./components/WordResult";
 import ImagesGrid from "./components/ImagesGrid";
-import { fetchWord } from "./services/dictionary";
-import { fetchImages } from "./services/pexels";
+import useTheme from "./hooks/useTheme";
+import useKeyboardFocus from "./hooks/useKeyboardFocus";
+import useDictionary from "./hooks/useDictionary";
+import useVocabStreak from "./hooks/useVocabStreak";
+import useSearchAnalytics from "./hooks/useSearchAnalytics";
+import { getWordOfTheDay } from "./utils/wordOfDay";
 import "./index.css";
 
 export default function App() {
-  const [query, setQuery] = useState("");
-  const [entry, setEntry] = useState(null);
-  const [photos, setPhotos] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [err, setErr] = useState("");
-  const [dark, setDark] = useState(() => {
-    try { return JSON.parse(localStorage.getItem("dark-pref") || "true"); } catch { return true; }
-  });
+  const { dark, setDark } = useTheme();
+  const { entry, photos, loading, err, search } = useDictionary();
+  const { streak, todayCount: streakToday } = useVocabStreak(entry?.word);
+  const { totalUnique, mostSearched, avgLength, todayCount } =
+    useSearchAnalytics();
 
+  const [query, setQuery] = useState("");
   const inputRef = useRef(null);
 
-  useEffect(() => {
-    document.documentElement.style.colorScheme = dark ? "dark" : "light";
-    localStorage.setItem("dark-pref", JSON.stringify(dark));
-  }, [dark]);
+  useKeyboardFocus(inputRef);
 
-  // Press "/" to focus search
   useEffect(() => {
-    const onKey = (e) => { if (e.key === "/") { e.preventDefault(); inputRef.current?.focus(); } };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    const word = getWordOfTheDay();
+    setQuery(word);
+    search(word);
   }, []);
-
-  async function search(word) {
-    try {
-      setLoading(true);
-      setErr("");
-      setEntry(null);
-      setPhotos([]);
-
-      const [dict] = await fetchWord(word);
-      setEntry(dict);
-
-      const imgRes = await fetchImages(word, 8);
-      setPhotos(imgRes.photos || []);
-    } catch (e) {
-      setErr(e.message || "Something went wrong");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  useEffect(() => { search("serendipity"); }, []);
 
   const hasImages = photos && photos.length > 0;
 
@@ -58,12 +35,33 @@ export default function App() {
       <div className="header">
         <div className="header-inner">
           <div className="brand">
-            <h1>Dictionary React App</h1>
-            <p>Definitions · Examples · Synonyms · Antonyms · Pronunciation · Images</p>
+            <h1>Swaroop's Dictionary</h1>
+            <p>
+              Definitions · Examples · Synonyms · Antonyms · Pronunciation ·
+              Images
+            </p>
           </div>
-          <button className="toggle" onClick={() => setDark(d => !d)}>
-            {dark ? "☀️ Light" : "🌙 Dark"}
-          </button>
+
+          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+            {streak > 0 && (
+              <div
+                style={{
+                  background: "rgba(255,120,0,0.15)",
+                  padding: "6px 12px",
+                  borderRadius: "20px",
+                  fontSize: "0.9rem",
+                  fontWeight: 600,
+                }}
+                title={`You looked up ${streakToday} word(s) today`}
+              >
+                🔥 {streak}-day streak
+              </div>
+            )}
+
+            <button className="toggle" onClick={() => setDark((d) => !d)}>
+              {dark ? "☀️ Light" : "🌙 Dark"}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -71,16 +69,54 @@ export default function App() {
         <div className="search-row">
           <SearchBar
             inputRef={inputRef}
-            onSearch={(w) => { setQuery(w); search(w); }}
+            onSearch={(w) => {
+              setQuery(w);
+              search(w);
+            }}
             loading={loading}
           />
         </div>
 
-        {loading && (<><div className="skel"></div><div className="skel" style={{ marginTop: 12 }}></div></>)}
+        {/* 📊 Analytics Panel */}
+        {totalUnique > 0 && (
+          <div className="card" style={{ marginBottom: 16 }}>
+            <h3 className="section-title">Your Vocabulary Insights</h3>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 20,
+                fontSize: "0.95rem",
+              }}
+            >
+              <div>📘 Total Unique Words: <strong>{totalUnique}</strong></div>
+              {mostSearched && (
+                <div>
+                  ⭐ Most Searched: <strong>{mostSearched}</strong>
+                </div>
+              )}
+              <div>
+                🔤 Avg Word Length: <strong>{avgLength}</strong>
+              </div>
+              <div>
+                📅 Searches Today: <strong>{todayCount}</strong>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {loading && (
+          <>
+            <div className="skel"></div>
+            <div className="skel" style={{ marginTop: 12 }}></div>
+          </>
+        )}
 
         {err && !loading && (
           <div className="error">
-            {err === "Word not found" ? `No results for “${query}”. Try another word.` : err}
+            {err === "Word not found"
+              ? `No results for “${query}”. Try another word.`
+              : err}
           </div>
         )}
 
@@ -104,7 +140,8 @@ export default function App() {
         )}
 
         <div className="footer">
-          Tip: press <kbd>/</kbd> to focus search • Built with Free Dictionary API & Pexels
+          Tip: press <kbd>/</kbd> to focus search • Built with Free Dictionary
+          API & Pexels
         </div>
       </div>
     </>
