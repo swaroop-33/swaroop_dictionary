@@ -4,7 +4,7 @@ A production-grade vocabulary intelligence platform built with React, optimized 
 
 Swaroop's Dictionary transforms a traditional word lookup tool into a habit-forming vocabulary system by combining search, pronunciation, image discovery, streak mechanics, and lightweight analytics — all in a modular, scalable frontend architecture.
 
-🌐 Live Demo
+🌐 Live Demo:-
 https://swaroopdictionary.vercel.app
 
 ✨ Core Features
@@ -120,6 +120,7 @@ Free Dictionary API
 Pexels API
 
 📦 Local Setup
+
 git clone https://github.com/swaroop-33/swaroop_dictionary.git
 cd swaroop_dictionary
 npm install
@@ -136,6 +137,8 @@ Build production:
 
 npm run build
 npm run preview
+
+
 🎯 What This Project Demonstrates
 
 Scalable frontend architecture
