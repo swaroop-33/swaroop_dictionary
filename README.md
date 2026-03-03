@@ -1,117 +1,109 @@
-Swaroop's Dictionary
+🚀 Swaroop's Dictionary
 
-A production-ready vocabulary intelligence platform built with React and deployed on Vercel.
+A production-grade vocabulary intelligence platform built with React, optimized for performance, and deployed on Vercel.
 
-Swaroop's Dictionary is more than a basic word lookup tool. It is a modular, performance-optimized web application that combines dictionary search, pronunciation, image discovery, streak tracking, and lightweight vocabulary analytics.
+Swaroop's Dictionary transforms a traditional word lookup tool into a habit-forming vocabulary system by combining search, pronunciation, image discovery, streak mechanics, and lightweight analytics — all in a modular, scalable frontend architecture.
 
-🚀 Live Demo
-
+🌐 Live Demo
 https://swaroopdictionary.vercel.app
 
-✨ Features
+✨ Core Features
 
-Real-time English word search
+🔎 Real-time English word search
 
-Definitions with usage examples
+📖 Definitions with contextual examples
 
-Pronunciation with audio playback
+🔊 Pronunciation with audio playback
 
-Synonyms and antonyms
+🔁 Synonyms & antonyms
 
-Related images via Pexels API
+🖼️ Contextual image discovery (Pexels API)
 
-Dark / Light theme toggle
+🌙 Dark / Light theme with persistent state
 
-Daily vocabulary streak tracker
+🔥 Daily streak tracking system
 
-Vocabulary analytics dashboard
+📊 Built-in vocabulary analytics dashboard
 
-Deterministic "Word of the Day"
+📅 Deterministic “Word of the Day” logic
 
-Lighthouse performance score 95+
+⚡ Lighthouse Performance 95+ (Production)
 
-🧠 Product Approach
+🧠 Product Philosophy
 
-Traditional dictionary apps are purely lookup-based.
-This project adds behavioral mechanics:
+Most dictionary apps are transactional.
 
-Streak tracking to encourage daily learning
+This system introduces:
 
-Deterministic daily word generation
+Streak psychology → Encourages daily engagement
 
-Lightweight analytics using localStorage
+Deterministic content logic → Consistent daily word generation
 
-Clean, distraction-free interface
+Local analytics engine → Tracks usage without backend storage
 
-The goal was to turn a utility tool into a vocabulary engagement system.
+Performance-first UI → Fast initial render, deferred image loading
 
-🏗 Architecture Overview
+The result:
+A lightweight vocabulary engagement platform — not just a lookup tool.
 
-The project uses a modular, hook-based architecture for separation of concerns.
+🏗 Architecture & Engineering Decisions
+Modular Hook-Based Design
+Hook	Responsibility
+useDictionary	API orchestration & async state control
+useTheme	Persistent theme management
+useKeyboardFocus	Productivity shortcut (/ to focus)
+useVocabStreak	Daily streak computation engine
+useSearchHistory	Local search analytics & insights
 
-Custom Hooks
+Why this architecture?
 
-useDictionary → Handles API calls and state management
+Clear separation of concerns
 
-useTheme → Manages dark/light theme persistence
+Scalable state management
 
-useKeyboardFocus → "/" shortcut for instant search focus
+Easier debugging & maintainability
 
-useVocabStreak → Tracks daily usage streaks
+Production-ready structure
 
-useSearchHistory → Manages local search history
+🔐 Secure API Design
 
-This ensures:
+📘 Dictionary → Free Dictionary API
 
-Reusability
+🖼️ Images → Pexels API
 
-Maintainability
+🔒 Serverless Edge Function proxy (Vercel)
 
-Clean logic separation
+🔑 API key stored in environment variables
 
-Scalability
+🚫 No client-side exposure of secrets
 
-🔐 API & Security Design
+This demonstrates real-world secure frontend integration.
 
-Dictionary Data
-
-Source: Free Dictionary API
-
-Images
-
-Source: Pexels API
-
-Implemented via serverless Edge Function proxy
-
-API key stored securely in Vercel environment variables
-
-Not exposed to the client bundle
-
-⚡ Performance Optimization
+⚡ Performance & Optimization
 
 Production Lighthouse Scores:
 
-Performance: 95+
+🟢 Performance: 95+
 
-Accessibility: 96
+🟢 Accessibility: 96
 
-Best Practices: 100
+🟢 Best Practices: 100
 
-SEO: 90+
+🟢 SEO: 90+
 
-Optimizations applied:
+Key optimizations:
 
-Non-blocking image loading
+Non-blocking image fetch strategy
 
-Lazy loading with decoding="async"
-
-Production build optimization
-
-CSS variable-based theme switching
+Lazy loading + decoding="async"
 
 Memoized components
 
-Reduced unnecessary re-renders
+Reduced re-renders
+
+CSS variable-based theming
+
+Optimized production build
 
 🛠 Tech Stack
 
@@ -119,7 +111,7 @@ React (Vite)
 
 JavaScript (ES6+)
 
-CSS (Custom properties, responsive layout)
+Custom CSS (variables + responsive design)
 
 Vercel (Deployment + Edge Functions)
 
@@ -127,16 +119,9 @@ Free Dictionary API
 
 Pexels API
 
-📦 Installation (Local Development)
-
-Clone the repository:
-
+📦 Local Setup
 git clone https://github.com/swaroop-33/swaroop_dictionary.git
-
 cd swaroop_dictionary
-
-Install dependencies:
-
 npm install
 
 Create a .env file:
@@ -147,36 +132,27 @@ Run development server:
 
 npm run dev
 
-Build for production:
+Build production:
 
 npm run build
 npm run preview
-
-🌍 Deployment
-
-Deployed on Vercel with:
-
-Edge Function proxy for secure API calls
-
-Environment variable management
-
-Production performance optimization
-
 🎯 What This Project Demonstrates
 
-Frontend architecture design
+Scalable frontend architecture
 
-Secure API integration
+Secure third-party API integration
 
-Performance optimization
+Performance optimization mindset
 
-SEO configuration
+SEO configuration awareness
 
-Modular React development
+Production debugging workflow
 
-Production debugging & deployment workflow
+Deployment & environment management
 
 👨‍💻 Author
 
 Swaroop
-Frontend Developer | React Builder
+Frontend Developer | React Engineer | Performance-Focused Builder
+
+⭐ If this project was interesting, consider starring the repository.
