@@ -122,7 +122,9 @@ Pexels API
 📦 Local Setup
 
 git clone https://github.com/swaroop-33/swaroop_dictionary.git
+
 cd swaroop_dictionary
+
 npm install
 
 Create a .env file:
@@ -156,6 +158,8 @@ Deployment & environment management
 👨‍💻 Author
 
 Swaroop
+
+
 Frontend Developer | React Engineer | Performance-Focused Builder
 
 ⭐ If this project was interesting, consider starring the repository.
